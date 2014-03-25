@@ -1,7 +1,5 @@
 __author__ = 'koo'
 
-__author__ = 'koo'
-
 '''
 CODE CHALLENGE: Implement GREEDYMOTIFSEARCH with pseudocounts.
      Input: Integers k and t, followed by a collection of strings Dna.
