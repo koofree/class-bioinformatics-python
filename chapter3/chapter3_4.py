@@ -62,7 +62,7 @@ def optimize_motif(motifs, k, input_text):
                 _motif = _pattern
         new_motifs.append(_motif)
 
-    return motifs
+    return new_motifs
 
 
 sample_input = '''8 5
@@ -97,13 +97,13 @@ for _k in range(0, random_count):
         else:
             break
 
-    motif_score = score(temp_motif)
+    temp_motif_score = score(temp_motif)
 
-    new_sum = sum(motif_score)
+    new_sum = sum(temp_motif_score)
     old_sum = sum(best_motifs_score)
     if new_sum < old_sum:
         best_motifs = temp_motif
-        best_motifs_score = motif_score
+        best_motifs_score = temp_motif_score
 
 print best_motifs_score
 

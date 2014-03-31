@@ -5,9 +5,9 @@ import itertools
 dna_chars = ['A', 'T', 'G', 'C']
 
 
-def all_pattern_of_dna(k):
+def all_pattern_of_dna(length):
     result = []
-    for s in itertools.product(dna_chars, repeat=k):
+    for s in itertools.product(dna_chars, repeat=length):
         str = ''
         for c in s:
             str += c

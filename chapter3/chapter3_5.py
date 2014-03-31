@@ -64,6 +64,8 @@ for j in range(0, n):
     if sum(temp_motifs_score) < sum(best_motifs_score):
         best_motifs = temp_motifs
 
+
+print sum(best_motifs_score)
 for line in best_motifs:
     print line
 
