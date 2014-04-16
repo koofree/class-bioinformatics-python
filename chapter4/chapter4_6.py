@@ -1,14 +1,12 @@
 __author__ = 'koo'
 
-sample_input = '''0 -> 3
-1 -> 0
-2 -> 1,6
-3 -> 2
-4 -> 2
-5 -> 4
-6 -> 5,8
-7 -> 9
-8 -> 7
+sample_input = '''0 -> 2
+1 -> 3
+2 -> 1
+3 -> 0,4
+6 -> 3,7
+7 -> 8
+8 -> 9
 9 -> 6'''
 
 import random
@@ -16,7 +14,7 @@ import pkg_resources
 
 adjacency_list = list()
 
-#sample_input = pkg_resources.resource_string('chapter4', 'data/chapter4_5_input')
+# sample_input = pkg_resources.resource_string('chapter4', 'data/chapter4_5_input')
 
 for line in sample_input.split('\n'):
     adjacency = dict()
@@ -30,6 +28,7 @@ for line in sample_input.split('\n'):
 total_count = len(adjacency_list)
 temp_count = 0
 eulerian_cycle = list()
+
 
 def addLast(adjacency_list, eulerian_cycle):
     added = False
@@ -70,7 +69,7 @@ def addFirst(adjacency_list, eulerian_cycle):
 
 while len(adjacency_list) > 0:
     for num in range(0, len(adjacency_list)):
-        adjacency = adjacency_list[random.randint(0, len(adjacency_list)-1)]
+        adjacency = adjacency_list[random.randint(0, len(adjacency_list) - 1)]
         if (len(eulerian_cycle) == 0):
             eulerian_cycle.append(adjacency)
             adjacency_list.remove(adjacency)

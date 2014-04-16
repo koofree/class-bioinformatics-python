@@ -1,22 +1,18 @@
 __author__ = 'koo'
 
-sample_input = '''0 -> 3
-1 -> 0
-2 -> 1,6
-3 -> 2
-4 -> 2
-5 -> 4
-6 -> 5,8
-7 -> 9
-8 -> 7
-9 -> 6'''
+sample_input = '''CTT -> TTA
+ACC -> CCA
+TAC -> ACC
+GGC -> GCT
+GCT -> CTT
+TTA -> TAC'''
 
 import random
 import pkg_resources
 
 adjacency_list = list()
 
-#sample_input = pkg_resources.resource_string('chapter4', 'data/chapter4_5_input')
+# sample_input = pkg_resources.resource_string('chapter4', 'data/chapter4_5_input')
 
 for line in sample_input.split('\n'):
     adjacency = dict()
@@ -70,7 +66,7 @@ def addFirst(adjacency_list, eulerian_cycle):
 
 while len(adjacency_list) > 0:
     for num in range(0, len(adjacency_list)):
-        adjacency = adjacency_list[random.randint(0, len(adjacency_list)-1)]
+        adjacency = adjacency_list[random.randint(0, len(adjacency_list) - 1)]
         if (len(eulerian_cycle) == 0):
             eulerian_cycle.append(adjacency)
             adjacency_list.remove(adjacency)
@@ -108,6 +104,6 @@ for adjacency in eulerian_cycle:
 
 result_line = result[0]
 for line in result[1:len(result)]:
-    result_line += '->' + line
+    result_line += line[2]
 
 print result_line
