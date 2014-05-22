@@ -8,6 +8,7 @@ END_CH = '$'
 # ($) character's ordinary.
 END_CH_NUM = ord('A') - 1
 
+# three type of result
 FIRST_OCCURRENCE = 'first_occurrence'
 CHA_COUNT = 'cha_count'
 COUNT = 'count'
@@ -20,6 +21,7 @@ def custom_ord(cha):
         return ord(cha)
 
 
+# generate first occurrence
 def generate_first_occurrence(first_column):
     symbol = first_column[0]
 
@@ -27,25 +29,28 @@ def generate_first_occurrence(first_column):
     occurrence = 0
     count = 1
 
-    result = {FIRST_OCCURRENCE: [occurrence], CHA_COUNT: []}
+    first_occurrence = [occurrence]
+    cha_count = list()
     while len(_first_column) is not 0:
         occurrence += 1
 
         if symbol != _first_column[0]:
             symbol = _first_column[0]
-            result[FIRST_OCCURRENCE].append(occurrence)
-
-            result[CHA_COUNT].append(count)
+            first_occurrence.append(occurrence)
+            # add cha count
+            cha_count.append(count)
             count = 0
 
-        count += 1
+        count += 1  # counting of same character
         _first_column = _first_column[1:]
 
-    result[CHA_COUNT].append(count)
+    # append last character count
+    cha_count.append(count)
 
-    return result
+    return {FIRST_OCCURRENCE: first_occurrence, CHA_COUNT: cha_count}
 
 
+# generate count matrix
 def generate_count(last_column, cha_type):
     index_counts = [0 for i in xrange(0, len(cha_type))]
     result = [list(index_counts)]
@@ -56,6 +61,7 @@ def generate_count(last_column, cha_type):
     return result
 
 
+# Better BWMatching
 def BetterBWMatching(first_occurrence, last_column, pattern, count, column_type):
     top = 0
     bottom = len(last_column) - 1
@@ -65,20 +71,23 @@ def BetterBWMatching(first_occurrence, last_column, pattern, count, column_type)
             symbol = _pattern[len(_pattern) - 1]
             _pattern = _pattern[:-1]
 
-            is_first = True
+            # check it has symbol at last_column substring.
             is_changed = False
             for i in xrange(top, bottom + 1):
                 if last_column[i] == symbol:
-                    top = first_occurrence[column_type.index(symbol)] + count[top][column_type.index(symbol)]
-                    bottom = first_occurrence[column_type.index(symbol)] \
-                             + count[bottom + 1][column_type.index(symbol)] - 1
-
                     is_changed = True
                     break
 
-            if not is_changed:
+            if is_changed:
+                top = first_occurrence[column_type.index(symbol)] \
+                      + count[top][column_type.index(symbol)]
+                bottom = first_occurrence[column_type.index(symbol)] \
+                         + count[bottom + 1][column_type.index(symbol)] - 1
+            else:
                 return 0
         else:
+            # all of pattern character removed than return
+            # distance of top and bottom
             return bottom - top + 1
 
 

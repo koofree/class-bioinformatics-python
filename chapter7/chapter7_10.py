@@ -15,20 +15,23 @@ def MultipleBetterBWMatching(first_occurrence, last_column, pattern, count, colu
             symbol = _pattern[len(_pattern) - 1]
             _pattern = _pattern[:-1]
 
-            is_first = True
+            # check it is changed
             is_changed = False
             for i in xrange(top, bottom + 1):
                 if last_column[i] == symbol:
-                    top = first_occurrence[column_type.index(symbol)] + count[top][column_type.index(symbol)]
-                    bottom = first_occurrence[column_type.index(symbol)] \
-                             + count[bottom + 1][column_type.index(symbol)] - 1
-
                     is_changed = True
                     break
 
-            if not is_changed:
+            # if symbol exist on last column substring
+            if is_changed:
+                top = first_occurrence[column_type.index(symbol)] + count[top][column_type.index(symbol)]
+                bottom = first_occurrence[column_type.index(symbol)] \
+                         + count[bottom + 1][column_type.index(symbol)] - 1
+            else:
+
                 return 0
         else:
+            # find location using suffix array
             results = []
             for i in xrange(top, bottom + 1):
                 results.append(suffix_array[i])

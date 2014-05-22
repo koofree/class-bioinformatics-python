@@ -49,12 +49,15 @@ def generate_matrix(original):
 
 
 # sort matrix in order by lexically
+# using Insert Sort Method
+# at the same time get the suffix array to use another problem
+# @return : SUFFIX_ARRAY, MATRIX
 def sort_matrix(original_matrix):
     suffix_array = [0]
     sorted_matrix = [original_matrix[0]]
     for i in range(1, len(original_matrix)):
         inserted = False  # status of inserting
-        original_string = original_matrix[i]
+        original_string = original_matrix[i]  # first row of matrix
         for j in range(0, len(sorted_matrix)):
             if compare(original_string, sorted_matrix[j]):
                 sorted_matrix.insert(j, original_string)

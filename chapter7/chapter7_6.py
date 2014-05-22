@@ -6,6 +6,7 @@ END_CH = '$'
 # ($) character's ordinary.
 END_CH_NUM = ord('A') - 1
 
+# four type of result
 LAST_TO_FIRST = 'last_to_first'
 FIRST_TO_LAST = 'first_to_last'
 FIRST_COLUMN = 'first_column'
@@ -20,34 +21,41 @@ def custom_ord(cha):
 
 
 # generate first column using insert sort
+# return : FIRST_TO_LAST, LAST_TO_FIRST, FIRST_COLUMN, COLUMN_TYPE
 def generate_first_column(bwt):
     length = len(bwt)
-    result = {FIRST_TO_LAST: list(),
-              LAST_TO_FIRST: [None for i in range(0, length)],
-              FIRST_COLUMN: '', COLUMN_TYPE: list()}
-    for i in xrange(0, len(bwt)):
-        bwt_cha = bwt[i]
-        result_length = len(result[FIRST_COLUMN])
 
+    first_to_last = list()
+    last_to_first = [None for i in range(0, length)]
+    first_column = ''
+    column_type = list()
+
+    for i in xrange(0, length):
+        bwt_cha = bwt[i]
+        result_length = len(first_column)
+
+        # compare and find index to insert
         inserting_index = result_length
         for _index in xrange(result_length - 1, -1, -1):
             c1 = custom_ord(bwt_cha)
-            c2 = custom_ord(bwt[result[FIRST_TO_LAST][_index]])
+            c2 = custom_ord(bwt[first_to_last[_index]])
             if c1 >= c2:
                 break
             else:
                 inserting_index = _index
                 continue
 
-        result[FIRST_COLUMN] = result[FIRST_COLUMN][:inserting_index] + bwt_cha + result[FIRST_COLUMN][inserting_index:]
-        result[FIRST_TO_LAST].insert(inserting_index, i)
+        first_column = first_column[:inserting_index] + bwt_cha + first_column[inserting_index:]
+        first_to_last.insert(inserting_index, i)
 
+    # change first_to_last to last_to_first
     for i in xrange(0, length):
-        result[LAST_TO_FIRST][result[FIRST_TO_LAST][i]] = i
-        if not result[FIRST_COLUMN][i] in result[COLUMN_TYPE]:
-            result[COLUMN_TYPE].append(result[FIRST_COLUMN][i])
+        last_to_first[first_to_last[i]] = i
+        if not first_column[i] in column_type:
+            column_type.append(first_column[i])
 
-    return result
+    return {FIRST_TO_LAST: first_to_last, LAST_TO_FIRST: last_to_first, FIRST_COLUMN: first_column,
+            COLUMN_TYPE: column_type}
 
 
 # generate original genome
